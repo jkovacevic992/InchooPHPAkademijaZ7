@@ -35,6 +35,32 @@ class AdminController
         $view->render('login',["message"=>""]);
        
     }
+    public function change()
+    {
+        $view = new View();
+        $view->render('change_info',["message"=>""]);
+    }
+    public function changeUserInfo($id)
+    {
+        try{
+            $db = Db::connect();
+            $statement = $db->prepare("update user set firstname = :firstname, lastname = :lastname, email = :email, pass = :pass where id=:id");
+            $statement->bindValue('firstname', Request::post("firstname"));
+            $statement->bindValue('lastname', Request::post("lastname"));
+            $statement->bindValue('email', Request::post("email"));
+            $statement->bindValue('id',$id);
+            $statement->bindValue('pass', password_hash(Request::post("pass"),PASSWORD_DEFAULT));
+            $statement->execute();
+            Session::getInstance()->logout();
+            $view = new View();
+            $view->render('login',["message"=>""]);
+        }catch (PDOException $exception){
+            $view = new View();
+            $view->render('change_info',["message"=>"Korisnik s istom email adresom već postoji."]);
+        }
+
+
+    }
 
     public function delete($post)
     {
@@ -95,7 +121,7 @@ class AdminController
 
     public function authorize()
     {
-//ne dostaju kontrole
+//nedostaju kontrole
         $db = Db::connect();
         $statement = $db->prepare("select id, concat(firstname, ' ', lastname) as name, pass from user where email=:email");
         $statement->bindValue('email', Request::post("email"));

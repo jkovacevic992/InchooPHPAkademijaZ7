@@ -5,6 +5,7 @@
     <a href="<?php echo App::config("url")."admin/registration" ?>">Registration</a>
 <?php else: ?>
     <a href="<?php echo App::config("url")."admin/logout" ?>">Logout <?php echo Session::getInstance()->getUser()->name ?></a>
+     <a href="<?php echo App::config("url")."admin/change" ?>">Change Info</a>
 <?php endif; ?>
 
 
