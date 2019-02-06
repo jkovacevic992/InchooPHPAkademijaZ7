@@ -29,11 +29,17 @@ class IndexController
             header('Location: ' . App::config('url'));
         } else {
             $connection = Db::connect();
-            $sql = 'INSERT INTO post (content,user) VALUES (:content,:user)';
-            $stmt = $connection->prepare($sql);
+            $connection->beginTransaction();
+            $stmt = $connection->prepare('INSERT INTO post (content,user) VALUES (:content,:user)');
             $stmt->bindValue('content', $data['content']);
             $stmt->bindValue('user', Session::getInstance()->getUser()->id);
             $stmt->execute();
+
+            $stmt = $connection->prepare('INSERT INTO tag(content,post) value (:content,last_insert_id())');
+            $stmt->bindValue('content', $data['tag']);
+            $stmt->execute();
+            $connection->commit();
+
             header('Location: ' . App::config('url'));
         }
     }

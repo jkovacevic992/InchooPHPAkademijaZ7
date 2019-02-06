@@ -7,8 +7,10 @@
 
 <cite><?= htmlspecialchars($post->getUser()) ?></cite>
 <h2><?= htmlspecialchars($post->getContent()) ?></h2>
-    <?php echo $post->date ?>
+    <?php echo $post->date ?><br/>
+    Tags: <?= $post->getTags(); ?><br/>
     Likes: <?php echo $post->getLikes() ?>
+
 
 
 <h4>Comments:</h4>

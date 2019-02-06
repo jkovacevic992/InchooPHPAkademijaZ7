@@ -36,7 +36,6 @@ post int not null
 
 create table tag(
 id int not null primary key auto_increment,
-user int not null,
 post int not null,
 content text
 
@@ -51,7 +50,6 @@ alter table comment add FOREIGN KEY (post) REFERENCES post(id);
 alter table likes add FOREIGN KEY (user) REFERENCES user(id);
 alter table likes add FOREIGN KEY (post) REFERENCES post(id);
 
-alter table tag add FOREIGN KEY (user) REFERENCES user(id);
 alter table tag add FOREIGN KEY (post) REFERENCES post(id);
 
 

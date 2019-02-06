@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * @method setId($id)
+ * @method setContent($content)
+ * @method setUser($user)
+ * @method setLikes($likes)
+ * @method setDate($date)
+ * @method setComments($comments)
+ * @method setUserid($userid)
+ * @method setTags($tags)
+ */
 class Post
 {
     private $id;
@@ -16,7 +26,9 @@ class Post
 
     private $userid;
 
-    public function __construct($id, $content, $user,$date, $likes,$comments,$userid)
+    private $tags;
+
+    public function __construct($id, $content, $user,$date, $likes,$comments,$userid, $tags)
     {
         $this->setId($id);
         $this->setContent($content);
@@ -25,6 +37,7 @@ class Post
         $this->setLikes($likes);
         $this->setComments($comments);
         $this->setUserid($userid);
+        $this->setTags($tags);
     }
 
     public function __set($name, $value)
@@ -36,6 +49,12 @@ class Post
     {
         return isset($this->$name) ? $this->$name : null;
     }
+
+    /**
+     * @return mixed
+     */
+
+
 
     public function __call($name, $arguments)
     {
@@ -53,7 +72,7 @@ class Post
     public static function all()
     {
 
-    
+
 
         $list = [];
         $db = Db::connect();
@@ -74,10 +93,10 @@ class Post
             $statement->execute();
             $comments = $statement->fetchAll();
 
-            $list[] = new Post($post->id, $post->content, $post->user,$post->date,$post->likes,$comments,0);
-        
+            $list[] = new Post($post->id, $post->content, $post->user,$post->date,$post->likes,$comments,0,[]);
+
         }
-         
+
 
         return $list;
     }
@@ -88,6 +107,7 @@ class Post
     {
         $id = intval($id);
         $db = Db::connect();
+        $db->beginTransaction();
         $statement = $db->prepare("select 
         a.id, a.content, concat(b.firstname, ' ', b.lastname) as user, a.date, a.user as userid, count(c.id) as likes
         from 
@@ -103,6 +123,13 @@ class Post
         $statement->execute();
         $comments = $statement->fetchAll();
 
-        return new Post($post->id, $post->content, $post->user, $post->date,$post->likes, $comments,$post->userid);
+        $statement = $db->prepare("select content from tag where post=:id");
+        $statement->bindValue('id',$id);
+        $statement->execute();
+        $tags = str_replace(',',' ',$statement->fetchAll()[0]->content);
+
+
+        $db->commit();
+        return new Post($post->id, $post->content, $post->user, $post->date,$post->likes, $comments,$post->userid,$tags);
     }
 }

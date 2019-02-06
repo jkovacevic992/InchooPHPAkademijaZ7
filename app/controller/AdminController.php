@@ -75,6 +75,10 @@ class AdminController
         $statement->bindValue('post', $post);
         $statement->execute();
 
+        $statement = $db->prepare("delete from tag where post=:post");
+        $statement->bindValue('post', $post);
+        $statement->execute();
+
         $statement = $db->prepare("delete from post where id=:post");
         $statement->bindValue('post', $post);
     

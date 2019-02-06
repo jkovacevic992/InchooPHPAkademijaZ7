@@ -13,8 +13,9 @@ DOMAĆA ZADAĆA
 Poželjne funkcionalnosti
 DONE:
 Promjena podataka o korisniku (ime, prezime, email, lozinka, slika) - sliku kad omogućiš 2d barcode
-TO DO:
 Dodjeljivanje oznaka (tagova) vezanih uz objavu
+TO DO:
+
 Novom korisniku se dodjeljuje slika koja je 2D barcode imena, prezimena i email-a.
 Prikazivanje objave na zasebnoj stranici (s svim njezinim komentarima i popisom kome se objava sviđa) s mogućnošću sheranja na Twitter, Facebook i Google+ (barem jedno od navedenog)
 Korisnik može označiti komentar ili objavu kao uvredljivu. Kada to isto napravi još 5 drugih jedinstvenih korisnika objave se više ne prikazuje u popisu objava

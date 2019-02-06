@@ -15,7 +15,9 @@
     <div class="container">
 
         <label for="content">What's on your mind?</label>
-        <input id="content" name="content">
+        <input class="u-full-width" id="content" name="content"><br/>
+        Tags:
+        <input id="tag" name="tag"><br/>
         <button type="submit" class="button-primary">Save</button>
     </div>
 
@@ -23,6 +25,7 @@
 
 </form>
 <?php endif; ?>
+
 <div class="container">
 
 
@@ -31,14 +34,14 @@
     <p>
         <cite><?= htmlspecialchars($post->getUser()) ?><br/></cite>
 
-        <a href="<?php echo App::config('url') ?>Index/view/<?= $post->getId() ?> ">
+        <a style="text-decoration: none" href="<?php echo App::config('url') ?>Index/view/<?= $post->getId() ?> ">
             <?= htmlspecialchars($post->getContent()) ?> </a> <br />
             <?php echo $post->date ?><br/>
             <?php if( Session::getInstance()->isLoggedIn() ): ?>
-            <a href="<?php echo App::config('url') ?>admin/like/<?php echo $post->id ?>">Like</a>
+            <a href="<?php echo App::config('url') ?>admin/like/<?php echo $post->id ?>">Like</a><br/>
             <?php endif; ?>
 
-            (<?php echo $post->getLikes() ?>)
+            Likes (<?php echo $post->getLikes() ?>)
 
         Comments (<?= count($post->getComments()) ?>)
 
