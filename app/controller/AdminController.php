@@ -132,13 +132,14 @@ class AdminController
         $this->index();
     }
 
-    public function json()
-    {
-
-        $posts = Post::all();
-       //print_r($posts);
-        echo json_encode($posts);
-    }
+    //JSON EXAMPLE FOR THE LAST TASK
+//    public function json()
+//    {
+//
+//        $posts = Post::all();
+//       //print_r($posts);
+//        echo json_encode($posts);
+//    }
 
     public function index()
     {
@@ -150,28 +151,7 @@ class AdminController
         ]);
     }
 
-    function bulkinsert()
-    {
-        $db = Db::connect();
-        for($i=0;$i<1000;$i++){
 
-            $statement = $db->prepare("insert into post (content,user) values ('DDDD $i',1)");
-            $statement->execute();
-
-            $id = $db->lastInsertId();
-
-            for($j=0;$j<10;$j++){
-
-                $statement = $db->prepare("insert into comment (content,user,post) values ('CCCCC $i',1,$id)");
-                $statement->execute();
-
-
-            }
-
-        }
-
-
-    }
 
    
 }
