@@ -1,20 +1,23 @@
 <a href="<?php echo App::config("url") ?>">Index</a><hr />
-
+<div class="container">
 <?php if( Session::getInstance()->isLoggedIn() &&
     $post->getUserid()==Session::getInstance()->getUser()->id): ?>
-<a href="<?php echo App::config("url") ?>admin/delete/<?php echo $post->getId() ?>">Delete posts (and all likes and comments)</a><br />
+<a href="<?php echo App::config("url") ?>admin/delete/<?php echo $post->getId() ?>">Delete post</a><br />
 <?php endif; ?>
 
-<cite><?= htmlspecialchars($post->getUser()) ?></cite>  <?php echo $post->date ?>
-<p><?= htmlspecialchars($post->getContent()) ?></p> Likes: <?php echo $post->getLikes() ?>
+<cite><?= htmlspecialchars($post->getUser()) ?></cite>
+<h2><?= htmlspecialchars($post->getContent()) ?></h2>
+    <?php echo $post->date ?>
+    Likes: <?php echo $post->getLikes() ?>
 
 
-<h3>Comments</h3>
+<h4>Comments:</h4>
 <?php foreach ($post->getComments() as $comment): ?>
     <p>
         <cite><?= htmlspecialchars($comment->user) ?></cite>
-        <?php echo $comment->date ?><br />
-        <?php echo $comment->content ?>
+
+       <?php echo $comment->content ?><br />
+        <?php echo $comment->date ?>
     </p>
 <?php endforeach; ?>
 
@@ -31,3 +34,4 @@
 
 </form>
 <?php endif; ?>
+</div>

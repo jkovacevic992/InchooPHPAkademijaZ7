@@ -34,6 +34,14 @@ user int not null,
 post int not null
 )engine=InnoDB;
 
+create table tag(
+id int not null primary key auto_increment,
+user int not null,
+post int not null,
+content text
+
+)engine=InnoDB;
+
 
 alter table post add FOREIGN KEY (user) REFERENCES user(id);
 
@@ -42,6 +50,9 @@ alter table comment add FOREIGN KEY (post) REFERENCES post(id);
 
 alter table likes add FOREIGN KEY (user) REFERENCES user(id);
 alter table likes add FOREIGN KEY (post) REFERENCES post(id);
+
+alter table tag add FOREIGN KEY (user) REFERENCES user(id);
+alter table tag add FOREIGN KEY (post) REFERENCES post(id);
 
 
 insert into user (id,firstname,lastname,email,pass) values

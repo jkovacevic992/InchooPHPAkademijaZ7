@@ -11,7 +11,9 @@ Korisnik može obrisati svoju objavu
 DOMAĆA ZADAĆA
 
 Poželjne funkcionalnosti
-Promjena podataka o korisniku (ime, prezime, email, lozinka, slika)
+DONE:
+Promjena podataka o korisniku (ime, prezime, email, lozinka, slika) - sliku kad omogućiš 2d barcode
+TO DO:
 Dodjeljivanje oznaka (tagova) vezanih uz objavu
 Novom korisniku se dodjeljuje slika koja je 2D barcode imena, prezimena i email-a.
 Prikazivanje objave na zasebnoj stranici (s svim njezinim komentarima i popisom kome se objava sviđa) s mogućnošću sheranja na Twitter, Facebook i Google+ (barem jedno od navedenog)
