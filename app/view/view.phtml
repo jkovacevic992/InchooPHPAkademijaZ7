@@ -8,7 +8,16 @@
 <cite><?= htmlspecialchars($post->getUser()) ?></cite>
 <h2><?= htmlspecialchars($post->getContent()) ?></h2>
     <?php echo $post->date ?><br/>
-    Tags: <?= $post->getTags(); ?><br/>
+    Tags:
+    <div class="row">
+    <?php foreach ($post->getTags() as $tag): ?>
+
+        <div class="one column">
+        <?php echo $tag ?>
+        </div>
+
+    <?php endforeach; ?>
+    </div>
     Likes: <?php echo $post->getLikes() ?>
 
 

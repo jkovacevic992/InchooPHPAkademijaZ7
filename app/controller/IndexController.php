@@ -34,9 +34,10 @@ class IndexController
             $stmt->bindValue('content', $data['content']);
             $stmt->bindValue('user', Session::getInstance()->getUser()->id);
             $stmt->execute();
-
-            $stmt = $connection->prepare('INSERT INTO tag(content,post) value (:content,last_insert_id())');
+            $postId = $connection->lastInsertId();
+            $stmt = $connection->prepare('INSERT INTO tag(content,post) value (:content,:id)');
             $stmt->bindValue('content', $data['tag']);
+            $stmt->bindValue('id',$postId);
             $stmt->execute();
             $connection->commit();
 

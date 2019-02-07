@@ -19,6 +19,12 @@ class AdminController
        
     }
 
+
+    public function barcode()
+    {
+
+    }
+
     public function register()
     {
 
@@ -42,6 +48,9 @@ class AdminController
     }
     public function changeUserInfo($id)
     {
+        if(Request::post("pass")===Request::post("confirmpass")){
+
+
         try{
             $db = Db::connect();
             $statement = $db->prepare("update user set firstname = :firstname, lastname = :lastname, email = :email, pass = :pass where id=:id");
@@ -56,7 +65,11 @@ class AdminController
             $view->render('login',["message"=>""]);
         }catch (PDOException $exception){
             $view = new View();
-            $view->render('change_info',["message"=>"Korisnik s istom email adresom već postoji."]);
+            $view->render('change_info',["message"=>"The user with this email already exists."]);
+        }
+        }else{
+            $view = new View();
+            $view->render('change_info',["message"=>"Passwords do not match."]);
         }
 
 

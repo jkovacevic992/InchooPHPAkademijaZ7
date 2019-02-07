@@ -126,7 +126,7 @@ class Post
         $statement = $db->prepare("select content from tag where post=:id");
         $statement->bindValue('id',$id);
         $statement->execute();
-        $tags = str_replace(',',' ',$statement->fetchAll()[0]->content);
+        $tags = explode(',',$statement->fetchAll()[0]->content);
 
 
         $db->commit();
