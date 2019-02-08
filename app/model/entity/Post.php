@@ -30,7 +30,7 @@ class Post
 
     private $dislikes;
 
-    public function __construct($id, $content, $user,$date, $likes,$comments,$userid, $tags, $dislikes)
+    public function __construct($id, $content, $user,$date, $likes,$comments,$userid, $tags=null, $dislikes)
     {
         $this->setId($id);
         $this->setContent($content);
@@ -40,7 +40,7 @@ class Post
         $this->setComments($comments);
         $this->setUserid($userid);
         $this->setTags($tags);
-        $this->setDislike($dislikes);
+        $this->setDislikes($dislikes);
     }
 
     public function __set($name, $value)
@@ -115,10 +115,11 @@ class Post
         $db = Db::connect();
         $db->beginTransaction();
         $statement = $db->prepare("select 
-        a.id, a.content, concat(b.firstname, ' ', b.lastname) as user, a.date, a.user as userid, count(c.id) as likes
+        a.id, a.content, concat(b.firstname, ' ', b.lastname) as user, a.date, a.user as userid, count(distinct  c.id) as likes, count(distinct d.id) as dislikes
         from 
         post a inner join user b on a.user=b.id 
         left join likes c on a.id=c.post 
+        left join dislikes d on a.id=d.post
          where a.id=:id");
         $statement->bindValue('id', $id);
         $statement->execute();
@@ -132,10 +133,14 @@ class Post
         $statement = $db->prepare("select content from tag where post=:id");
         $statement->bindValue('id',$id);
         $statement->execute();
-        $tags = explode(',',$statement->fetchAll()[0]->content);
+        $tags = $statement->fetchAll();
+        if(!empty($tags)){
+            $tags = explode(',',$tags[0]->content);
+        }
+
 
 
         $db->commit();
-        return new Post($post->id, $post->content, $post->user, $post->date,$post->likes, $comments,$post->userid,$tags);
+        return new Post($post->id, $post->content, $post->user, $post->date,$post->likes, $comments,$post->userid,$tags, $post->dislikes);
     }
 }
