@@ -155,6 +155,17 @@ try{
        
     }
 
+    public function dislike($post)
+    {
+        $db = Db::connect();
+        $statement = $db->prepare("insert into dislikes (post,user) values (:post,:user)");
+        $statement->bindValue('post', $post);
+        $statement->bindValue('user', Session::getInstance()->getUser()->id);
+        $statement->execute();
+
+        $this->index();
+    }
+
 
     public function authorize()
     {

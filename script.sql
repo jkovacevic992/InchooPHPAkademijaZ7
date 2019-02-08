@@ -35,6 +35,12 @@ user int not null,
 post int not null
 )engine=InnoDB;
 
+create table dislikes(
+  id int not null primary key auto_increment,
+  user int not null,
+  post int not null
+)engine=InnoDB;
+
 create table tag(
 id int not null primary key auto_increment,
 post int not null,
@@ -50,6 +56,9 @@ alter table comment add FOREIGN KEY (post) REFERENCES post(id);
 
 alter table likes add FOREIGN KEY (user) REFERENCES user(id);
 alter table likes add FOREIGN KEY (post) REFERENCES post(id);
+
+alter table dislikes add FOREIGN KEY (user) REFERENCES user(id);
+alter table dislikes add FOREIGN KEY (post) REFERENCES post(id);
 
 alter table tag add FOREIGN KEY (post) REFERENCES post(id);
 
