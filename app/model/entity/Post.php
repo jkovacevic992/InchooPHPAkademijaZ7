@@ -89,6 +89,7 @@ class Post
         
         where a.date > ADDDATE(now(), INTERVAL -7 DAY) 
         group by a.id, a.content, concat(b.firstname, ' ', b.lastname), a.date 
+        having count(distinct d.id)<5
         order by a.date desc limit 10");
         $statement->execute();
         foreach ($statement->fetchAll() as $post) {

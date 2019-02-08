@@ -145,14 +145,15 @@ try{
     public function like($post)
     {
 
+
         $db = Db::connect();
         $statement = $db->prepare("insert into likes (post,user) values (:post,:user)");
         $statement->bindValue('post', $post);
         $statement->bindValue('user', Session::getInstance()->getUser()->id);
         $statement->execute();
-        
+
         $this->index();
-       
+
     }
 
     public function dislike($post)
