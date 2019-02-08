@@ -147,10 +147,25 @@ try{
 
 
         $db = Db::connect();
-        $statement = $db->prepare("insert into likes (post,user) values (:post,:user)");
-        $statement->bindValue('post', $post);
-        $statement->bindValue('user', Session::getInstance()->getUser()->id);
+        $statement = $db->prepare("select user from likes where post=:post");
+        $statement->bindValue('post',$post);
         $statement->execute();
+        $temp = $statement->fetchAll();
+        $bool=true;
+        foreach ($temp as $item){
+            if(Session::getInstance()->getUser()->id===$item->user){
+                $bool=false;
+                break;
+
+            }
+        }
+        if($bool) {
+            $statement = $db->prepare("insert into likes (post,user) values (:post,:user)");
+            $statement->bindValue('post', $post);
+            $statement->bindValue('user', Session::getInstance()->getUser()->id);
+            $statement->execute();
+        }
+
 
         $this->index();
 
@@ -159,10 +174,24 @@ try{
     public function dislike($post)
     {
         $db = Db::connect();
-        $statement = $db->prepare("insert into dislikes (post,user) values (:post,:user)");
-        $statement->bindValue('post', $post);
-        $statement->bindValue('user', Session::getInstance()->getUser()->id);
+        $statement = $db->prepare("select user from dislikes where post=:post");
+        $statement->bindValue('post',$post);
         $statement->execute();
+        $temp = $statement->fetchAll();
+        $bool=true;
+        foreach ($temp as $item){
+            if(Session::getInstance()->getUser()->id===$item->user){
+                $bool=false;
+                break;
+
+            }
+        }
+        if($bool) {
+            $statement = $db->prepare("insert into dislikes (post,user) values (:post,:user)");
+            $statement->bindValue('post', $post);
+            $statement->bindValue('user', Session::getInstance()->getUser()->id);
+            $statement->execute();
+        }
 
         $this->index();
     }
