@@ -40,7 +40,7 @@
             <?php echo $post->date ?><br/>
             <?php if( Session::getInstance()->isLoggedIn() ): ?>
             <a href="<?php echo App::config('url') ?>admin/like/<?php echo $post->id ?>">Like</a>
-                <a href="<?php echo App::config('url') ?>admin/dislike/<?php echo $post->id ?>">Dislike</a><br/>
+                <a href="<?php echo App::config('url') ?>admin/dislikePost/<?php echo $post->id ?>">Dislike</a><br/>
             <?php endif; ?>
 
             Likes (<?php echo $post->getLikes() ?>)

@@ -171,7 +171,7 @@ try{
 
     }
 
-    public function dislike($post)
+    public function dislikePost($post)
     {
         $db = Db::connect();
         $statement = $db->prepare("select user from dislikes where post=:post");
