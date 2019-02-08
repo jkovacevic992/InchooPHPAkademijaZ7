@@ -7,7 +7,8 @@ id int not null primary key auto_increment,
 firstname varchar(50) not null,
 lastname varchar(50) not null,
 email varchar(100) not null,
-pass char(60) not null
+pass char(60) not null,
+image varchar(100)
 )engine=InnoDB;
 
 create unique index ix1 on user(email);

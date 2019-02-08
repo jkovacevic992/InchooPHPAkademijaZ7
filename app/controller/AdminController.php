@@ -1,5 +1,8 @@
 <?php
 
+use Metzli\Encoder\Encoder;
+use Metzli\Renderer\PngRenderer;
+
 class AdminController
 {
     public function login()
@@ -22,6 +25,10 @@ class AdminController
 
     public function barcode()
     {
+        $code= Encoder::encode('Josip');
+        $renderer = new PngRenderer();
+        echo $renderer->render($code);
+
 
     }
 
