@@ -25,9 +25,6 @@ class AdminController
 
     public function barcode()
     {
-        $code= Encoder::encode('Josip');
-        $renderer = new PngRenderer();
-        echo $renderer->render($code);
 
 
     }
@@ -35,12 +32,18 @@ class AdminController
     public function register()
     {
 
+        $code= Encoder::encode(Request::post("firstname").Request::post("lastname").Request::post("email"));
+        $renderer = new PngRenderer();
+        $renderer->render($code);
+        $imgName = rand(5000,1000000);
+        rename(BP.'vendor/z38/temp/image.png',BP.'images/'. $imgName.'.png');
         $db = Db::connect();
-        $statement = $db->prepare("insert into user (firstname,lastname,email,pass) values (:firstname,:lastname,:email,:pass)");
+        $statement = $db->prepare("insert into user (firstname,lastname,email,pass,image) values (:firstname,:lastname,:email,:pass,:image)");
         $statement->bindValue('firstname', Request::post("firstname"));
         $statement->bindValue('lastname', Request::post("lastname"));
         $statement->bindValue('email', Request::post("email"));
         $statement->bindValue('pass', password_hash(Request::post("pass"),PASSWORD_DEFAULT));
+        $statement->bindValue('image',$imgName);
         $statement->execute();
 
         Session::getInstance()->logout();
@@ -147,7 +150,7 @@ class AdminController
     {
 //nedostaju kontrole
         $db = Db::connect();
-        $statement = $db->prepare("select id, concat(firstname, ' ', lastname) as name, pass from user where email=:email");
+        $statement = $db->prepare("select id, concat(firstname, ' ', lastname) as name, pass, image from user where email=:email");
         $statement->bindValue('email', Request::post("email"));
         $statement->execute();
 

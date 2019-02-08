@@ -4,6 +4,7 @@
     <a href="<?php echo App::config("url")."admin/login" ?>">Login</a>
     <a href="<?php echo App::config("url")."admin/registration" ?>">Registration</a>
 <?php else: ?>
+ <img src="<?= '../../images/'.Session::getInstance()->getUser()->image.'.png';?>">
     <a href="<?php echo App::config("url")."admin/logout" ?>">Logout <?php echo Session::getInstance()->getUser()->name ?></a>
      <a href="<?php echo App::config("url")."admin/change" ?>">Change Info</a>
 <?php endif; ?>
