@@ -67,7 +67,6 @@ class PngRenderer implements RendererInterface
 
         ob_start();
         imagepng($im,BP.'vendor/z38/temp/image.png');
-
         $result = ob_get_clean();
         imagedestroy($im);
 

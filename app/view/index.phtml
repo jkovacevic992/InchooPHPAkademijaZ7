@@ -4,8 +4,8 @@
     <a href="<?php echo App::config("url")."admin/login" ?>">Login</a>
     <a href="<?php echo App::config("url")."admin/registration" ?>">Registration</a>
 <?php else: ?>
- <img src="<?= '../../images/'.Session::getInstance()->getUser()->image.'.png';?>">
-    <a href="<?php echo App::config("url")."admin/logout" ?>">Logout <?php echo Session::getInstance()->getUser()->name ?></a>
+ <img style="max-width: 100px" src="<?= '../../images/'.Session::getInstance()->getUser()->image;?>">
+    <a href="<?php echo App::config("url")."admin/logout" ?>">Logout <?php echo Session::getInstance()->getUser()->firstname ?></a>
      <a href="<?php echo App::config("url")."admin/change" ?>">Change Info</a>
 <?php endif; ?>
 <div class="container"><h1>SOCIAL NETWORK</h1></div>

@@ -1,23 +1,25 @@
 
 <?php echo $message ?>
-<form method="post" action="<?php echo App::config('url') ?>admin/changeUserInfo/<?php echo Session::getInstance()->getUser()->id ?>">
+<form enctype="multipart/form-data" method="post" action="<?php echo App::config('url') ?>admin/changeUserInfo/<?php echo Session::getInstance()->getUser()->id ?>">
 
     <div class="form-group">
 
         <label for="firstname">New First name</label>
-        <input type="firstname" name="firstname">
+        <input type="firstname" name="firstname" value="<?= Session::getInstance()->getUser()->firstname?>">
 
         <label for="lastname">New Last name</label>
-        <input type="lastname" name="lastname">
+        <input type="lastname" name="lastname" value="<?= Session::getInstance()->getUser()->lastname?>">
 
         <label for="email">New Email</label>
-        <input type="email" name="email">
+        <input type="email" name="email" value="<?= Session::getInstance()->getUser()->email?>">
 
         <label for="password">New Password</label>
         <input type="password" name="pass">
 
         <label for="password">Confirm New Password</label>
         <input type="password" name="confirmpass">
+        <p>New profile picture</p>
+        <input type="file" name="file" id="file">
 
     </div>
 

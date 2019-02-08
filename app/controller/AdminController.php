@@ -31,6 +31,8 @@ class AdminController
 
     public function register()
     {
+try{
+
 
         $code= Encoder::encode(Request::post("firstname").Request::post("lastname").Request::post("email"));
         $renderer = new PngRenderer();
@@ -49,6 +51,10 @@ class AdminController
         Session::getInstance()->logout();
         $view = new View();
         $view->render('login',["message"=>""]);
+}catch (PDOException $exception){
+    $view = new View();
+    $view->render('registration',["message"=>"The user with this email already exists."]);
+}
        
     }
     public function change()
@@ -62,13 +68,17 @@ class AdminController
 
 
         try{
+            $imageName = str_replace(' ','_',$_FILES["file"]["name"]);
+            $imageTmp = $_FILES["file"]["tmp_name"];
+            move_uploaded_file($imageTmp, BP . "images/" . $imageName);
             $db = Db::connect();
-            $statement = $db->prepare("update user set firstname = :firstname, lastname = :lastname, email = :email, pass = :pass where id=:id");
+            $statement = $db->prepare("update user set firstname = :firstname, lastname = :lastname, email = :email, pass = :pass, image= :image where id=:id");
             $statement->bindValue('firstname', Request::post("firstname"));
             $statement->bindValue('lastname', Request::post("lastname"));
             $statement->bindValue('email', Request::post("email"));
             $statement->bindValue('id',$id);
             $statement->bindValue('pass', password_hash(Request::post("pass"),PASSWORD_DEFAULT));
+            $statement->bindValue('image', $imageName);
             $statement->execute();
             Session::getInstance()->logout();
             $view = new View();
@@ -150,7 +160,7 @@ class AdminController
     {
 //nedostaju kontrole
         $db = Db::connect();
-        $statement = $db->prepare("select id, concat(firstname, ' ', lastname) as name, pass, image from user where email=:email");
+        $statement = $db->prepare("select id, firstname, lastname, email, pass, image from user where email=:email");
         $statement->bindValue('email', Request::post("email"));
         $statement->execute();
 
