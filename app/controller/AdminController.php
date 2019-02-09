@@ -197,12 +197,26 @@ try{
     }
 
     public function dislikeComment($comment)
-    {   $db = Db::connect();
-        $statement = $db->prepare("insert into dislikes (comment,user) values (:comment,:user)");
-             $statement->bindValue('comment',$comment);
-        $statement->bindValue('user', Session::getInstance()->getUser()->id);
+    {
+        $db = Db::connect();
+        $statement = $db->prepare("select user from dislikes where comment=:comment");
+        $statement->bindValue('comment',$comment);
         $statement->execute();
+        $temp = $statement->fetchAll();
+        $bool=true;
+        foreach ($temp as $item){
+            if(Session::getInstance()->getUser()->id===$item->user){
+                $bool=false;
+                break;
 
+            }
+        }
+        if($bool) {
+            $statement = $db->prepare("insert into dislikes (comment,user) values (:comment,:user)");
+            $statement->bindValue('comment', $comment);
+            $statement->bindValue('user', Session::getInstance()->getUser()->id);
+            $statement->execute();
+        }
 
 
         $this->index();
