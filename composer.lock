@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "743e79f87471a808f05c60639cda597b",
+    "content-hash": "d28e8ee9519a590b8aae4ddbb44d0bb9",
     "packages": [
         {
             "name": "z38/metzli",
@@ -61,6 +61,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-mysqli": "*"
+    },
     "platform-dev": []
 }

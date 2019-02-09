@@ -196,6 +196,18 @@ try{
         $this->index();
     }
 
+    public function dislikeComment($comment)
+    {   $db = Db::connect();
+        $statement = $db->prepare("insert into dislikes (comment,user) values (:comment,:user)");
+             $statement->bindValue('comment',$comment);
+        $statement->bindValue('user', Session::getInstance()->getUser()->id);
+        $statement->execute();
+
+
+
+        $this->index();
+    }
+
 
     public function authorize()
     {

@@ -30,7 +30,7 @@ class Post
 
     private $dislikes;
 
-    public function __construct($id, $content, $user,$date, $likes,$comments,$userid, $tags=null, $dislikes)
+    public function __construct($id, $content, $user, $date, $likes, $comments, $userid, $tags = null, $dislikes)
     {
         $this->setId($id);
         $this->setContent($content);
@@ -43,38 +43,8 @@ class Post
         $this->setDislikes($dislikes);
     }
 
-    public function __set($name, $value)
-    {
-        $this->$name = $value;
-    }
-
-    public function __get($name)
-    {
-        return isset($this->$name) ? $this->$name : null;
-    }
-
-    /**
-     * @return mixed
-     */
-
-
-
-    public function __call($name, $arguments)
-    {
-        $function = substr($name, 0, 3);
-        if ($function === 'set') {
-            $this->__set(strtolower(substr($name, 3)), $arguments[0]);
-            return $this;
-        } else if ($function === 'get') {
-            return $this->__get(strtolower(substr($name, 3)));
-        }
-
-        return $this;
-    }
-
     public static function all()
     {
-
 
 
         $list = [];
@@ -99,15 +69,13 @@ class Post
             $statement->execute();
             $comments = $statement->fetchAll();
 
-            $list[] = new Post($post->id, $post->content, $post->user,$post->date,$post->likes,$comments,0,[],$post->dislikes);
+            $list[] = new Post($post->id, $post->content, $post->user, $post->date, $post->likes, $comments, 0, [], $post->dislikes);
 
         }
 
 
         return $list;
     }
-
-
 
     public static function find($id)
     {
@@ -125,22 +93,53 @@ class Post
         $statement->execute();
         $post = $statement->fetch();
 
-        $statement = $db->prepare("select a.id, a.content, concat(b.firstname, ' ', b.lastname) as user, a.date from comment a inner join user b on a.user=b.id where a.post=:id ");
+        $statement = $db->prepare("select a.id, a.content, concat(b.firstname, ' ', b.lastname) as user, a.date, count(c.id) as dislikes from comment a
+        inner join user b on a.user=b.id
+        left join dislikes c on c.comment=a.id
+        where a.post=1
+        group by a.id having count(c.id)<5");
         $statement->bindValue('id', $id);
         $statement->execute();
         $comments = $statement->fetchAll();
 
         $statement = $db->prepare("select content from tag where post=:id");
-        $statement->bindValue('id',$id);
+        $statement->bindValue('id', $id);
         $statement->execute();
         $tags = $statement->fetchAll();
-        if(!empty($tags)){
-            $tags = explode(',',$tags[0]->content);
+        if (!empty($tags)) {
+            $tags = explode(',', $tags[0]->content);
         }
 
 
-
         $db->commit();
-        return new Post($post->id, $post->content, $post->user, $post->date,$post->likes, $comments,$post->userid,$tags, $post->dislikes);
+        return new Post($post->id, $post->content, $post->user, $post->date, $post->likes, $comments, $post->userid, $tags, $post->dislikes);
+    }
+
+    /**
+     * @return mixed
+     */
+
+
+    public function __call($name, $arguments)
+    {
+        $function = substr($name, 0, 3);
+        if ($function === 'set') {
+            $this->__set(strtolower(substr($name, 3)), $arguments[0]);
+            return $this;
+        } else if ($function === 'get') {
+            return $this->__get(strtolower(substr($name, 3)));
+        }
+
+        return $this;
+    }
+
+    public function __get($name)
+    {
+        return isset($this->$name) ? $this->$name : null;
+    }
+
+    public function __set($name, $value)
+    {
+        $this->$name = $value;
     }
 }

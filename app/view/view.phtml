@@ -41,6 +41,8 @@
 
        <?php echo $comment->content ?><br />
         <?php echo $comment->date ?>
+        <a href="<?php echo App::config('url') ?>admin/dislikeComment/<?php echo $comment->id ?>">Dislike</a><br/>
+        Dislikes: <?= $comment->dislikes ?><br/>
     </p>
 <?php endforeach; ?>
 

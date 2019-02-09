@@ -32,12 +32,13 @@ final class App
             $id = strtolower($pathParts[2]);
         }
 
+
         //dispatch
         if (class_exists($controller) && method_exists($controller, $action)) {
             $controllerInstance = new $controller();
             if ($id !== 0) {
                 $controllerInstance->$action($id);
-            } else {
+            }else{
                 $controllerInstance->$action();
             }
         } else {

@@ -12,6 +12,15 @@ class IndexController
         ]);
     }
 
+    public function pagination()
+    {
+        $view = new View();
+        $posts = Post::all();
+        $view->render('pagination',[
+            "posts" => $posts
+        ]);
+    }
+
     public function view($id = 0)
     {
         $view = new View();
