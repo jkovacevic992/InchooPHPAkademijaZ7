@@ -1,0 +1,18 @@
+<a href="<?php echo App::config("url") ?>">Index</a><hr />
+<div class="container">
+    <?php if(empty($posts)):?>
+    <h4>You have no hidden posts.</h4>
+    <?php endif; ?>
+<?php foreach ($posts as $post): ?>
+    <p>
+        <?= htmlspecialchars($post->getContent()) ?> </a> <br />
+        <?php echo $post->date ?><br/>
+
+        Likes (<?php echo $post->getLikes() ?>)
+        Dislikes (<?php echo $post->getDislikes() ?>)
+        <a href="<?php echo App::config("url") ?>admin/delete/<?php echo $post->getId() ?>">Delete post</a><br />
+
+
+    </p>
+<?php endforeach; ?>
+</div>
