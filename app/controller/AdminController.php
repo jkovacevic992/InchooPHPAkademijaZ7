@@ -134,6 +134,15 @@ try{
 
     }
 
+    public function deleteLike($like)
+    {
+        $db = Db::connect();
+        $statement = $db->prepare("delete from likes where id=:like");
+        $statement->bindValue('like',$like);
+        $statement->execute();
+        $this->index();
+    }
+
     public function comment($post)
     {
 
