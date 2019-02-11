@@ -123,6 +123,17 @@ try{
        
     }
 
+    public function deleteComment($comment)
+    {
+        $db = Db::connect();
+        $statement = $db->prepare("delete from comment where id=:comment");
+        $statement->bindValue('comment',$comment);
+        $statement->execute();
+
+        $this->index();
+
+    }
+
     public function comment($post)
     {
 
@@ -227,7 +238,7 @@ try{
     {
 //nedostaju kontrole
         $db = Db::connect();
-        $statement = $db->prepare("select id, firstname, lastname, email, pass, image from user where email=:email");
+        $statement = $db->prepare("select id, firstname, lastname, email, pass, image, role from user where email=:email");
         $statement->bindValue('email', Request::post("email"));
         $statement->execute();
 

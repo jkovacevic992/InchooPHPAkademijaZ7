@@ -8,7 +8,8 @@ firstname varchar(50) not null,
 lastname varchar(50) not null,
 email varchar(100) not null,
 pass char(60) not null,
-image varchar(100)
+image varchar(100),
+role varchar(10) default 'user'
 )engine=InnoDB;
 
 create unique index ix1 on user(email);
@@ -72,6 +73,9 @@ insert into user (id,firstname,lastname,email,pass) values
 
 insert into user (firstname,lastname,email,pass) values
 ('Mara','Jakopec','mjakopec@gmail.com','$2y$10$LFXuW6y.P0Zd81fwd..CK.pCd6ZcoT5DsY7rqet9jwzReaoRi7yua');
+
+insert into user (id,firstname,lastname,email,pass,role) values
+(null,'Josip','Kovačević','jkovacevic992@gmail.com', '$2y$10$LFXuW6y.P0Zd81fwd..CK.pCd6ZcoT5DsY7rqet9jwzReaoRi7yua', 'admin');
 
 
 insert into post (content,user) values ('Evo danas pada kiša opet :(',1), ('Jedem jagode.',2);

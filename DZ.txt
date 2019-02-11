@@ -15,11 +15,11 @@ DONE:
 Promjena podataka o korisniku (ime, prezime, email, lozinka, slika)
 Dodjeljivanje oznaka (tagova) vezanih uz objavu
 Novom korisniku se dodjeljuje slika koja je 2D barcode imena, prezimena i email-a.
+Korisnik može označiti komentar ili objavu kao uvredljivu. Kada to isto napravi još 5 drugih jedinstvenih korisnika objave se više ne prikazuje u popisu objava
 
 TO DO:
 
 Prikazivanje objave na zasebnoj stranici (s svim njezinim komentarima i popisom kome se objava sviđa) s mogućnošću sheranja na Twitter, Facebook i Google+ (barem jedno od navedenog)
-Korisnik može označiti komentar ili objavu kao uvredljivu. Kada to isto napravi još 5 drugih jedinstvenih korisnika objave se više ne prikazuje u popisu objava
 Straničenje (Paginacija ili ajaxirani Učitaj više objava)
 Implementacija uloge nadzornika sustava. Nadzornik može ukloniti bilo koju objavu, komentar ili oznaku sviđanja objave za svakog korisnika. Jednom uklonjenu objavu korisnik i dalje vidi, može je obrisati ali ne može vratiti vidljivost objavi.
 

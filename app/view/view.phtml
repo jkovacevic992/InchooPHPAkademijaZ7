@@ -11,7 +11,7 @@
 <a href="<?php echo App::config("url") ?>">Index</a><hr />
 <div class="container">
 <?php if( Session::getInstance()->isLoggedIn() &&
-    $post->getUserid()==Session::getInstance()->getUser()->id): ?>
+    ($post->getUserid()==Session::getInstance()->getUser()->id) || Session::getInstance()->getUser()->role==='admin'): ?>
 <a href="<?php echo App::config("url") ?>admin/delete/<?php echo $post->getId() ?>">Delete post</a><br />
 <?php endif; ?>
 
@@ -41,7 +41,11 @@
 
        <?php echo $comment->content ?><br />
         <?php echo $comment->date ?>
+        <?php if(Session::getInstance()->isLoggedIn() && Session::getInstance()->getUser()->role==='admin'): ?>
+        <a href="<?php echo App::config('url') ?>admin/deleteComment/<?php echo $comment->id ?>">Delete Comment</a><br/>
+        <?php endif; ?>
         <a href="<?php echo App::config('url') ?>admin/dislikeComment/<?php echo $comment->id ?>">Dislike</a><br/>
+
         Dislikes: <?= $comment->dislikes ?><br/>
     </p>
 <?php endforeach; ?>
