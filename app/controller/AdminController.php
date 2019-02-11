@@ -123,6 +123,25 @@ try{
        
     }
 
+    public function showHiddenPosts($id)
+    {
+        $view = new View();
+        $posts= Post::hiddenPosts($id);
+        $view->render('hidden_posts',[
+            "posts" => $posts
+        ]);
+    }
+
+    public function hidePost($id)
+    {
+        $db = Db::connect();
+        $statement = $db->prepare("update post set hidden=true where id=:id ");
+        $statement->bindValue('id',$id);
+        $statement->execute();
+
+        $this->index();
+    }
+
     public function deleteComment($comment)
     {
         $db = Db::connect();

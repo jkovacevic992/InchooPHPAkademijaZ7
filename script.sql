@@ -19,7 +19,8 @@ create table post(
 id int not null primary key auto_increment,
 content text,
 user int not null,
-date datetime not null default now()
+date datetime not null default now(),
+hidden boolean default false
 )engine=InnoDB;
 
 create table comment(

@@ -57,7 +57,7 @@ class Post
         left join likes c on a.id=c.post
         left join dislikes d on a.id=d.post
         
-        where a.date > ADDDATE(now(), INTERVAL -7 DAY) 
+        where a.date > ADDDATE(now(), INTERVAL -7 DAY) and not a.hidden=true
         group by a.id, a.content, concat(b.firstname, ' ', b.lastname), a.date 
         having count(distinct d.id)<5
         order by a.date desc limit 10");
@@ -74,6 +74,35 @@ class Post
         }
 
 
+        return $list;
+    }
+    public static function hiddenPosts($id)
+    {
+        $list = [];
+        $db = Db::connect();
+        $statement = $db->prepare("select
+  a.id, a.content, concat(b.firstname, ' ', b.lastname) as user, a.date,
+  count(distinct c.id) as likes, count(distinct d.id) as dislikes
+from
+  post a inner join user b on a.user=b.id
+         left join likes c on a.id=c.post
+         left join dislikes d on a.id=d.post
+
+where  a.hidden=true and b.id=:id
+group by a.id, a.content, concat(b.firstname, ' ', b.lastname), a.date
+having count(distinct d.id)<5
+order by a.date desc");
+        $statement->bindValue('id',$id);
+        $statement->execute();
+        foreach ($statement->fetchAll() as $post) {
+
+            $statement = $db->prepare("select a.id, a.content, concat(b.firstname, ' ', b.lastname) as user, a.date from comment a inner join user b on a.user=b.id where a.post=:id ");
+            $statement->bindValue('id', $post->id);
+            $statement->execute();
+            $comments = $statement->fetchAll();
+
+            $list[] = new Post($post->id, $post->content, $post->user, $post->date, $post->likes, $comments, 0, [], $post->dislikes);
+        }
         return $list;
     }
 

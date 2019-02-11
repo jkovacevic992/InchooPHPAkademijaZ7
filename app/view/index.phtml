@@ -9,6 +9,7 @@
     <?php endif;?>
          <a href="<?php echo App::config("url")."admin/logout" ?>">Logout <?php echo Session::getInstance()->getUser()->firstname ?></a>
      <a href="<?php echo App::config("url")."admin/change" ?>">Change Info</a>
+     <a href="<?php echo App::config("url")."admin/showHiddenPosts/".Session::getInstance()->getUser()->id?>">See your hidden posts</a>
 <?php endif; ?>
 <div class="container"><h1>SOCIAL NETWORK</h1></div>
 
@@ -41,9 +42,11 @@
             <?php echo $post->date ?><br/>
             <?php if( Session::getInstance()->isLoggedIn() ): ?>
             <a href="<?php echo App::config('url') ?>admin/like/<?php echo $post->id ?>">Like</a>
-                <a href="<?php echo App::config('url') ?>admin/dislikePost/<?php echo $post->id ?>">Dislike</a><br/>
+                <a href="<?php echo App::config('url') ?>admin/dislikePost/<?php echo $post->id ?>">Dislike</a>
             <?php endif; ?>
-
+        <?php if(Session::getInstance()->isLoggedIn() && Session::getInstance()->getUser()->role==="admin"): ?>
+        <a href="<?php echo App::config('url') ?>admin/hidePost/<?php echo $post->id ?>">Hide</a><br/>
+        <?php endif; ?>
             Likes (<?php echo $post->getLikes() ?>)
         Dislikes (<?php echo $post->getDislikes() ?>)
 

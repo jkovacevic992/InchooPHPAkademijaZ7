@@ -11,7 +11,7 @@
 <a href="<?php echo App::config("url") ?>">Index</a><hr />
 <div class="container">
 <?php if( Session::getInstance()->isLoggedIn() &&
-    ($post->getUserid()==Session::getInstance()->getUser()->id) || Session::getInstance()->getUser()->role==='admin'): ?>
+    ($post->getUserid()==Session::getInstance()->getUser()->id || Session::getInstance()->getUser()->role==='admin')): ?>
 <a href="<?php echo App::config("url") ?>admin/delete/<?php echo $post->getId() ?>">Delete post</a><br />
 <?php endif; ?>
 
