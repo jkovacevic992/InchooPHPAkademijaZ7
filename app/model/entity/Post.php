@@ -115,6 +115,21 @@ class Post
         return new Post($post->id, $post->content, $post->user, $post->date, $post->likes, $comments, $post->userid, $tags, $post->dislikes);
     }
 
+    public static function findLikes($id)
+    {
+        $id = intval($id);
+        $db = Db::connect();
+        $db->beginTransaction();
+        $statement = $db->prepare("select a.id, concat(b.firstname, ' ', b.lastname) as user
+from likes a inner join user b on a.user = b.id
+where a.post=:id");
+        $statement->bindValue('id',$id);
+        $statement->execute();
+        $likes = $statement->fetchAll();
+
+        return $likes;
+    }
+
     /**
      * @return mixed
      */
