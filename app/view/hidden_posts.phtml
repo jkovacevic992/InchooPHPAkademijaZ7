@@ -8,8 +8,8 @@
         <?= htmlspecialchars($post->getContent()) ?> </a> <br />
         <?php echo $post->date ?><br/>
 
-        Likes (<?php echo $post->getLikes() ?>)
-        Dislikes (<?php echo $post->getDislikes() ?>)
+        Likes (<?php echo htmlspecialchars($post->getLikes()) ?>)
+        Dislikes (<?php echo htmlspecialchars($post->getDislikes()) ?>)
         <a href="<?php echo App::config("url") ?>admin/delete/<?php echo $post->getId() ?>">Delete post</a><br />
 
 

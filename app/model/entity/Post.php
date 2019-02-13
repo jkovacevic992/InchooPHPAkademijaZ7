@@ -125,7 +125,7 @@ order by a.date desc");
         $statement = $db->prepare("select a.id, a.content, concat(b.firstname, ' ', b.lastname) as user, a.date, count(c.id) as dislikes from comment a
         inner join user b on a.user=b.id
         left join dislikes c on c.comment=a.id
-        where a.post=1
+        where a.post=:id
         group by a.id having count(c.id)<5");
         $statement->bindValue('id', $id);
         $statement->execute();

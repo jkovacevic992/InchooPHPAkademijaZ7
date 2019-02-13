@@ -47,8 +47,8 @@
         <?php if(Session::getInstance()->isLoggedIn() && Session::getInstance()->getUser()->role==="admin"): ?>
         <a href="<?php echo App::config('url') ?>admin/hidePost/<?php echo $post->id ?>">Hide</a><br/>
         <?php endif; ?>
-            Likes (<?php echo $post->getLikes() ?>)
-        Dislikes (<?php echo $post->getDislikes() ?>)
+            Likes (<?php echo htmlspecialchars($post->getLikes()) ?>)
+        Dislikes (<?php echo htmlspecialchars($post->getDislikes()) ?>)
 
         Comments (<?= count($post->getComments()) ?>)
 

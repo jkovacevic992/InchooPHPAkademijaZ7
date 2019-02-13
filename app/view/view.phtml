@@ -23,27 +23,30 @@
     <?php foreach ($post->getTags() as $tag): ?>
 
         <div class="one column">
-        <?php echo $tag ?>
+        <?php echo htmlspecialchars($tag) ?>
         </div>
 
     <?php endforeach; ?>
     </div>
-    Likes: <?php echo $post->getLikes() ?><br/>
-    Dislikes: <?= $post->getDislikes() ?><br/>
+    Likes: <?php echo htmlspecialchars($post->getLikes()) ?><br/>
+    Dislikes: <?= htmlspecialchars($post->getDislikes()) ?><br/>
     <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><br/>
     <div style="vertical-align: top;" class="fb-share-button" data-href="<?= App::config('url'). 'Index/view/'.$post->getId()?>" data-layout="button" data-size="small" data-mobile-iframe="true"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 <h4>People who liked this post: </h4><br/>
+    <?php if(!empty($likes)): ?>
     <?php foreach($likes as $user):?>
     <p class="column" style="margin-bottom: 0px"><?= $user->user?></p>
-    <?php if(Session::getInstance()->getUser()->role==='admin'):?>
+    <?php if(Session::getInstance()->isLoggedIn() && Session::getInstance()->getUser()->role==='admin'):?>
             <a class="column" style="margin-bottom: 20px" href="<?php echo App::config("url") ?>admin/deleteLike/<?php echo $user->id ?>">Delete Like</a><br />
     <?php endif;?>
     <?php endforeach; ?>
+    <?php endif; ?>
 
 <h4>Comments:</h4>
+
 <?php foreach ($post->getComments() as $comment): ?>
     <p>
-        <cite><?= htmlspecialchars($comment->user) ?></cite>
+        <cite><?= $comment->user ?></cite>
 
        <?php echo $comment->content ?><br />
         <?php echo $comment->date ?>
@@ -52,7 +55,7 @@
         <?php endif; ?>
         <a href="<?php echo App::config('url') ?>admin/dislikeComment/<?php echo $comment->id ?>">Dislike</a><br/>
 
-        Dislikes: <?= $comment->dislikes ?><br/>
+        Dislikes: <?= htmlspecialchars($comment->dislikes) ?><br/>
     </p>
 <?php endforeach; ?>
 
