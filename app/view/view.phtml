@@ -20,13 +20,11 @@
     <?php echo $post->date ?><br/>
     Tags:
     <div class="row">
-    <?php foreach ($post->getTags() as $tag): ?>
+    <?php echo $post->getTags() ?>
 
-        <div class="one column">
-        <?php echo htmlspecialchars($tag) ?>
-        </div>
 
-    <?php endforeach; ?>
+
+
     </div>
     Likes: <?php echo htmlspecialchars($post->getLikes()) ?><br/>
     Dislikes: <?= htmlspecialchars($post->getDislikes()) ?><br/>
@@ -48,7 +46,7 @@
     <p>
         <cite><?= $comment->user ?></cite>
 
-       <?php echo $comment->content ?><br />
+       <?php echo htmlspecialchars($comment->content) ?><br />
         <?php echo $comment->date ?>
         <?php if(Session::getInstance()->isLoggedIn() && Session::getInstance()->getUser()->role==='admin'): ?>
         <a href="<?php echo App::config('url') ?>admin/deleteComment/<?php echo $comment->id ?>">Delete Comment</a><br/>

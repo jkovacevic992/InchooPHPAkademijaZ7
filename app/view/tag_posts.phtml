@@ -1,0 +1,19 @@
+<a href="<?php echo App::config("url") ?>">Index</a><hr />
+<div class="container">
+<?php foreach ($posts as $post): ?>
+<cite><?= htmlspecialchars($post->getUser())?></cite>
+<h4>    <?= htmlspecialchars($post->getContent()) ?></h4> <br />
+        <?php echo $post->date ?><br/>
+
+        Likes (<?php echo htmlspecialchars($post->getLikes()) ?>)
+        Dislikes (<?php echo htmlspecialchars($post->getDislikes()) ?>)<br/>
+        Comments: <br/>
+        <?php foreach ($post->getComments() as $comment):?>
+        <cite><?= $comment->user ?></cite><br/>
+
+        <?php echo htmlspecialchars($comment->content) ?><br />
+        <?php echo $comment->date ?><br/><hr/>
+        <?php endforeach; ?>
+
+<?php endforeach; ?>
+</div>

@@ -135,13 +135,16 @@ order by a.date desc");
         $statement->bindValue('id', $id);
         $statement->execute();
         $tags = $statement->fetchAll();
+        $tagsString= "";
         if (!empty($tags)) {
-            $tags = explode(',', $tags[0]->content);
+            foreach($tags as $tag){
+                $tagsString .= $tag->content . " ";
+            }
         }
 
 
         $db->commit();
-        return new Post($post->id, $post->content, $post->user, $post->date, $post->likes, $comments, $post->userid, $tags, $post->dislikes);
+        return new Post($post->id, $post->content, $post->user, $post->date, $post->likes, $comments, $post->userid, $tagsString, $post->dislikes);
     }
 
     public static function findLikes($id)
@@ -185,5 +188,35 @@ where a.post=:id");
     public function __set($name, $value)
     {
         $this->$name = $value;
+    }
+
+
+    public static function searchTags()
+    {
+        $list = [];
+        $tags= $_POST['tags'];
+        $connection = Db::connect();
+        $stmt = $connection->prepare('select
+  a.id, a.content, concat(b.firstname, \' \', b.lastname) as user, a.date,
+  count(distinct c.id) as likes, count(distinct d.id) as dislikes, e.content as tags
+from
+  post a inner join user b on a.user=b.id
+         left join likes c on a.id=c.post
+         left join dislikes d on a.id=d.post
+        inner join tag e on a.id = e.post
+where e.content= :content group by a.id;');
+        $stmt->bindValue('content', $tags);
+
+        $stmt->execute();
+        foreach ($stmt->fetchAll() as $post) {
+
+            $statement = $connection->prepare("select a.id, a.content, concat(b.firstname, ' ', b.lastname) as user, a.date from comment a inner join user b on a.user=b.id where a.post=:id ");
+            $statement->bindValue('id', $post->id);
+            $statement->execute();
+            $comments = $statement->fetchAll();
+
+            $list[] = new Post($post->id, $post->content, $post->user, $post->date, $post->likes, $comments, 0, [], $post->dislikes);
+        }
+        return $list;
     }
 }

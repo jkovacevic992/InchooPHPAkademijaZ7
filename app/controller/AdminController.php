@@ -64,7 +64,7 @@ try{
     }
     public function changeUserInfo($id)
     {
-        if(Request::post("pass")===Request::post("confirmpass")){
+        if(Request::post("pass")===Request::post("confirmpass")&& Request::post("pass")!==""){
 
 
         try{
@@ -131,7 +131,14 @@ try{
             "posts" => $posts
         ]);
     }
-
+    public function showTaggedPosts()
+    {
+        $view = new View();
+        $posts= Post::searchTags();
+        $view->render('tag_posts',[
+            "posts" => $posts
+        ]);
+    }
     public function hidePost($id)
     {
         $db = Db::connect();

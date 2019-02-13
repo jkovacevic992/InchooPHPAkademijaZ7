@@ -38,10 +38,14 @@ class IndexController
             $stmt->bindValue('user', Session::getInstance()->getUser()->id);
             $stmt->execute();
             $postId = $connection->lastInsertId();
-            $stmt = $connection->prepare('INSERT INTO tag(content,post) value (:content,:id)');
-            $stmt->bindValue('content', $data['tag']);
-            $stmt->bindValue('id',$postId);
-            $stmt->execute();
+            $tags=explode(",",$data['tag']);
+            foreach($tags as $tag){
+                $stmt = $connection->prepare('INSERT INTO tag(content,post) value (:content,:id)');
+                $stmt->bindValue('content', trim($tag));
+                $stmt->bindValue('id',$postId);
+                $stmt->execute();
+            }
+
             $connection->commit();
 
             header('Location: ' . App::config('url'));
@@ -69,4 +73,6 @@ class IndexController
         }
         return $data;
     }
+
+
 }

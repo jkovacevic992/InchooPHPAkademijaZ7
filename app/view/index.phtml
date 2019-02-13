@@ -1,10 +1,9 @@
 
-
  <?php if(!Session::getInstance()->isLoggedIn()): ?>    
     <a href="<?php echo App::config("url")."admin/login" ?>">Login</a>
     <a href="<?php echo App::config("url")."admin/registration" ?>">Registration</a>
 <?php else: ?>
-<?php if(Session::getInstance()->getUser()->image !== null) :?>
+<?php if(Session::getInstance()->getUser()->image !== null && Session::getInstance()->getUser()->image !== "") :?>
          <img style="max-width: 100px" src="<?= '../../images/'.Session::getInstance()->getUser()->image;?>">
     <?php endif;?>
          <a href="<?php echo App::config("url")."admin/logout" ?>">Logout <?php echo Session::getInstance()->getUser()->firstname ?></a>
@@ -12,8 +11,16 @@
      <a href="<?php echo App::config("url")."admin/showHiddenPosts/".Session::getInstance()->getUser()->id?>">See your hidden posts</a>
 <?php endif; ?>
 <div class="container"><h1>SOCIAL NETWORK</h1></div>
+ <div class="container">
+     <form method="post" action="<?php echo App::config('url')?>Admin/showTaggedPosts">
+         <p>Search by tags</p>
+         <input type="text" name="tags"><br/>
+         <input class="button-primary" type="submit" name="submit"><br/>
+     </form>
+ </div>
 
-<?php if(Session::getInstance()->isLoggedIn()):?>
+
+ <?php if(Session::getInstance()->isLoggedIn()):?>
 <form method="post" action="<?php echo App::config('url') ?>Index/newPost">
 
     <div class="container">
