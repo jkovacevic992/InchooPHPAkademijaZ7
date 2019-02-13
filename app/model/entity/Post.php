@@ -204,7 +204,7 @@ from
          left join likes c on a.id=c.post
          left join dislikes d on a.id=d.post
         inner join tag e on a.id = e.post
-where e.content= :content group by a.id;');
+where e.content= :content and not a.hidden=true group by a.id;');
         $stmt->bindValue('content', $tags);
 
         $stmt->execute();

@@ -112,6 +112,10 @@ try{
         $statement->bindValue('post', $post);
         $statement->execute();
 
+        $statement = $db->prepare("delete from dislikes where post=:post");
+        $statement->bindValue('post', $post);
+        $statement->execute();
+
         $statement = $db->prepare("delete from post where id=:post");
         $statement->bindValue('post', $post);
     

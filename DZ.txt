@@ -18,16 +18,13 @@ Novom korisniku se dodjeljuje slika koja je 2D barcode imena, prezimena i email-
 Korisnik može označiti komentar ili objavu kao uvredljivu. Kada to isto napravi još 5 drugih jedinstvenih korisnika objave se više ne prikazuje u popisu objava
 Prikazivanje objave na zasebnoj stranici (s svim njezinim komentarima i popisom kome se objava sviđa) s mogućnošću sheranja na Twitter, Facebook i Google+ (barem jedno od navedenog)
 Implementacija uloge nadzornika sustava. Nadzornik može ukloniti bilo koju objavu, komentar ili oznaku sviđanja objave za svakog korisnika. Jednom uklonjenu objavu korisnik i dalje vidi, može je obrisati ali ne može vratiti vidljivost objavi.
-
-
-TO DO:
-Straničenje (Paginacija ili ajaxirani Učitaj više objava)
-
-
-
-
-Opcionalne funkcionalnosti
-Pregled aktivnosti na pojedinoj objavi koristeći vremenski pregled (timeline)
 Pretraga po oznakama(tagovima)
+
+
+
+
+To do:
+Straničenje (Paginacija ili ajaxirani Učitaj više objava)
+Pregled aktivnosti na pojedinoj objavi koristeći vremenski pregled (timeline)
 Funkcionalnost dodavanja nove objave, komentiranje postojeće kao i sviđanja oznake odraditi putem AJAX-a.
 Kreiranje REST API za druge klijent koji omogućuje sve funkcionalnosti putem API-a koje su moguće na aplikaciji
