@@ -76,7 +76,7 @@ insert into user (firstname,lastname,email,pass) values
 ('Mara','Jakopec','mjakopec@gmail.com','$2y$10$LFXuW6y.P0Zd81fwd..CK.pCd6ZcoT5DsY7rqet9jwzReaoRi7yua');
 
 insert into user (id,firstname,lastname,email,pass,role) values
-(null,'Josip','Kovačević','jkovacevic992@gmail.com', '$2y$10$LFXuW6y.P0Zd81fwd..CK.pCd6ZcoT5DsY7rqet9jwzReaoRi7yua', 'admin');
+(null,'Admin','Admin','admin@admin.com', '$2y$10$LFXuW6y.P0Zd81fwd..CK.pCd6ZcoT5DsY7rqet9jwzReaoRi7yua', 'admin');
 
 
 insert into post (content,user) values ('Evo danas pada kiša opet :(',1), ('Jedem jagode.',2);
