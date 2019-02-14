@@ -64,7 +64,7 @@ alter table likes add FOREIGN KEY (post) REFERENCES post(id);
 
 alter table dislikes add FOREIGN KEY (user) REFERENCES user(id);
 alter table dislikes add FOREIGN KEY (post) REFERENCES post(id);
-alter table dislikes add foreign key (comment) references comment(id);
+alter table dislikes add foreign key (comment) references comment(id) on delete cascade;
 
 alter table tag add FOREIGN KEY (post) REFERENCES post(id);
 

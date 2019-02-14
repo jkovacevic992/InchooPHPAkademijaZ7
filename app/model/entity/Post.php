@@ -90,7 +90,6 @@ from
 
 where  a.hidden=true and b.id=:id
 group by a.id, a.content, concat(b.firstname, ' ', b.lastname), a.date
-having count(distinct d.id)<5
 order by a.date desc");
         $statement->bindValue('id',$id);
         $statement->execute();
@@ -204,7 +203,7 @@ from
          left join likes c on a.id=c.post
          left join dislikes d on a.id=d.post
         inner join tag e on a.id = e.post
-where e.content= :content and not a.hidden=true group by a.id;');
+where e.content= :content and not a.hidden=true group by a.id having count(distinct d.id)<5;');
         $stmt->bindValue('content', $tags);
 
         $stmt->execute();

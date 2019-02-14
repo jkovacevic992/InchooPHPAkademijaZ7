@@ -100,6 +100,13 @@ try{
 
         $db = Db::connect();
         $db->beginTransaction();
+
+
+        $statement = $db->prepare("delete from dislikes where post=:post");
+        $statement->bindValue('post', $post);
+        $statement->execute();
+
+
         $statement = $db->prepare("delete from comment where post=:post");
         $statement->bindValue('post', $post);
         $statement->execute();
@@ -112,9 +119,7 @@ try{
         $statement->bindValue('post', $post);
         $statement->execute();
 
-        $statement = $db->prepare("delete from dislikes where post=:post");
-        $statement->bindValue('post', $post);
-        $statement->execute();
+
 
         $statement = $db->prepare("delete from post where id=:post");
         $statement->bindValue('post', $post);
@@ -224,7 +229,7 @@ try{
     public function dislikePost($post)
     {
         $db = Db::connect();
-        $statement = $db->prepare("select user from dislikes where post=:post");
+        $statement = $db->prepare("select user from dislikes where post=:post group by id");
         $statement->bindValue('post',$post);
         $statement->execute();
         $temp = $statement->fetchAll();
